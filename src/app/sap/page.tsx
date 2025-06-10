@@ -23,8 +23,8 @@ export default function SAPPage() {
 				method: "POST",
 				body: formData,
 			});
-			const { protocol } = await response.json();
-			setProtocol(protocol);
+			const { sap } = await response.json();
+			setSAP(sap);
 		} catch (error) {
 			console.error("Error generating protocol:", error);
 		} finally {
@@ -33,7 +33,7 @@ export default function SAPPage() {
 	};
 
 	const handleFileContent = (content: string) => {
-		setSAP(content);
+		setProtocol(content);
 	};
 
 	return (
@@ -73,8 +73,11 @@ export default function SAPPage() {
 					>
 						Generate SAP
 					</Button>
-
-					{sap && <SAPDisplay content={sap} />}
+					{isLoading && !sap ? (
+						<p>Loading...</p>
+					) : sap ? (
+						<SAPDisplay content={sap} />
+					) : null}
 				</div>
 			</div>
 		</main>
